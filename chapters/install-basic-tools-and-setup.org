@@ -1,0 +1,285 @@
+* Install basic tools and setup
+
+** Add a new user when needed
+
+#+BEGIN_SRC bash
+  # Add new user
+  useradd -m -G wheel YOUR_USER_NAME
+
+  # Set password
+  passwd YOUR_USER_NAME
+#+END_SRC
+
+
+** Install and configure =doas=
+
+#+BEGIN_SRC bash
+  pacman --sync --refresh opendoas
+  
+#+END_SRC
+
+
+Then create =/etc/doas.conf= with the following settings:
+
+#+BEGIN_SRC conf
+  #
+  # nopass   The user is not required to enter a password.
+  # keepenv  Environment variables other than those listed in doas(1) are
+  #          retained when creating the environment for the new process.
+  #
+  # Read `man doas.conf` for more details
+  #
+  permit nopass keepenv setenv { PATH } YOUR_USER_NAME as root
+#+END_SRC
+
+</br>
+
+Make sure to change the file permission:
+
+#+BEGIN_SRC bash
+  chown -c root:root /etc/doas.conf
+  chmod -c 0400 /etc/doas.conf
+#+END_SRC
+
+
+** Install everything I need
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh tree git git-delta bat ripgrep procs htop btop fastfetch fzf fish lf neovim python-pynvim tmux emacs-nativecomp aspell aspell-en base-devel man-db man-pages
+
+  #
+  # Hyprland
+  #
+  doas pacman --sync --refresh hyprland xdg-desktop-portal-hyprland dunst qt6-wayland wl-clipboard alacritty tmux waybar mpv yt-dlp 
+#+END_SRC
+
+
+** Change =fish= as default shell
+
+#+BEGIN_SRC bash
+  chsh -s /usr/bin/fish
+#+END_SRC
+
+Relogin to take effect.
+
+
+** Create and copy GIT SSH key
+
+#+BEGIN_SRC bash
+  ssh-keygen -t ed25519 -C "YOUR_EMAIL_HERE"
+
+  #
+  # If you're using `Fish` shell, then better change to `bash` before you run
+  # this command:
+  #
+  # bash
+  #
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_ed25519
+
+  #
+  # Then ssh into this machine, cat the pub key and create SSH key on Github settings
+  #
+  cat ~/.ssh/id_ed25519.pub | wl-copy
+#+END_SRC
+
+
+** Setup git
+
+#+BEGIN_SRC bash
+  git config --global user.name "YOUR_PREFFERED_USER_NAME_HERE"
+  git config --global user.email "YOUR_EMAIL_HERE"
+
+  git config --global pull.rebase false
+  git config --global core.pager delta
+  git config --global interactive.diffFilter "delta --color-only"
+  git config --global delta.navigate true
+  git config --global delta.light false
+  git config --global delta.line-numbers true
+  git config --global delta.side-by-side true
+  git config --global delta.show-syntax-themes true
+  git config --global merge.conflictstyle diff3
+  git config --global diff.colorMoved default
+#+END_SRC
+
+
+** Install =Rust=, as =paru= needs it
+
+#+BEGIN_SRC bash
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+  rustup component add rust-analyzer
+#+END_SRC
+
+Then relogin to take effects.
+
+
+** Install =paru= - packages from =AUR (Arch User Repository)=
+
+You have to install =sudo=, as =paru= uses it!!!
+
+#+BEGIN_SRC bash
+  # Switch to root
+  su
+
+  # Install sudo if not yet
+  pacman --sync --refresh sudo
+
+  # Allow `wheel` group to use `sudo`
+  doas visudo
+#+END_SRC
+
+
+You need to install =rustup= first if not yet:
+
+#+BEGIN_SRC bash
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+#+END_SRC
+
+
+Install =paru=:
+
+#+BEGIN_SRC bash
+  mkdir ~/temp && cd ~/temp
+
+  sudo pacman -S --needed git base-devel
+  git clone https://aur.archlinux.org/paru.git
+  cd paru
+
+  #
+  # Choose '2', install `cargo` via `rustup` for a small download size!!!
+  #
+  makepkg -si
+
+  #
+  # If `makepkg -si` exit with error, then plz make sure to added the latest stable toolchain
+  #
+  rustup toolchain add stable
+
+  #
+  # Or if you've already install the stable toolchain, then update it
+  #
+  rustup update
+
+
+  cd ~/temp && rm -rf paru
+#+END_SRC
+
+
+
+** Wallpaper related if you needed
+
+#+BEGIN_SRC bash
+  #
+  # Wallpaper backend:
+  #
+  # Make sure to select =swww= (default =1=) rather than the =swww-git= (outdated)
+  # and choose =rustup= (option =2=)!!!
+  #
+  paru --sync --refresh swww
+#+END_SRC
+
+
+*** How to set wallpaper
+
+#+BEGIN_SRC bash
+  #
+  # Init once
+  #
+  swww init
+
+  #
+  # Set wallpaper
+  #
+  swww img YOUR_WALLPAPER_FILENAME_HERE
+
+  #
+  # Apply transition when changing wallpaper
+  #
+  www img --transition-type wipe --transition-angle 45 YOUR_WALLPAPER_FILENAME_HERE
+#+END_SRC
+
+
+*** =waypaper= (GUI - frontend)
+
+**** Install
+
+#+BEGIN_SRC bash
+  paru --sync --refresh waypaper
+#+END_SRC
+
+
+**** how to run
+
+#+BEGIN_SRC bash
+  #
+  # Run with given backend, you only need to pass for the first time
+  # and then 'waypaper' will keep using it
+  #
+  waypaper --backend swww
+#+END_SRC
+
+You might get the following error when choosing a wallpaper : =No such file or directory: swaybg=
+
+That's you got a wrong settings in =~/.config/waypaper/config.ini=, open and fix it like below:
+
+Pay attention to the =backend= setting!!!
+
+#+BEGIN_SRC bash
+  cat ~/.config/waypaper/config.ini
+
+  # [Settings]
+  # folder = /home/wison/Photos/wallpaper
+  # fill = Fill
+  # sort = name
+  # backend = swww
+  # color = #FFFFFF
+  # language = en
+  # subfolders = False
+  # wallpaper = /home/wison/Photos/wallpaper/forest.jpg
+  # monitors = All
+#+END_SRC
+
+
+**** In Hyperland configuration 
+
+#+BEGIN_SRC bash
+  #
+  # Reset to the last chosen wallpaper
+  #
+  exec-once = waypaper --restore
+#+END_SRC
+
+
+
+** Run =Hyprland=
+
+You should make sure that the following services are running:
+
+#+BEGIN_SRC bash
+  systemctl --user status pipewire wireplumber 
+#+END_SRC
+
+Otherwise, enbable it before starting =Hyprland=.
+
+#+BEGIN_SRC bash
+  Hyprland
+#+END_SRC
+
+
+
+Also, =xdg-desktop-portal-hyprland= should start automatically:
+
+#+BEGIN_SRC bash
+  procs desktop
+
+  # PID:▲ User  │ TTY CPU MEM CPU Time │ Command
+  #             │     [%] [%]          │
+  # 923   wison │     0.0 0.0 00:00:00 │ /usr/lib/xdg-desktop-portal
+  # 951   wison │     0.0 0.1 00:00:00 │ /usr/lib/xdg-desktop-portal-hyprland
+  # 1339  wison │     0.0 0.0 00:00:00 │ /usr/lib/xdg-desktop-portal
+  # 1370  wison │     0.0 0.1 00:00:00 │ /usr/lib/xdg-desktop-portal-hyprland
+#+END_SRC
+
+Have a look at here to know more about =xdg-desktop-portal-hyprland (XDPH)=:
+https://wiki.hyprland.org/Useful-Utilities/xdg-desktop-portal-hyprland/

@@ -1,0 +1,136 @@
+* Network configuration via =netctl=
+
+** How to setup ethernet with static ip via =iproute2= before installing =netctl=
+
+Add DNS name server to =/etc/resolv.conf=, for example:
+
+#+BEGIN_SRC conf
+  nameserver 192.168.1.200
+  options edns0 trust-ad
+  search .
+#+END_SRC
+
+
+Then, assign static IP to ethernet NIC and add a default route:
+
+#+BEGIN_SRC bash
+    #
+    # Replace `NIC` to yours
+    # Replace `IP_ADDRESS` to yours, e.g. `192.168.1.99/24`
+    #
+    ip address add IP_ADDRESS dev NIC
+
+
+    #
+    # Active the NIC
+    #
+    # Replace `NIC` to yours
+    #
+    ip link set NIC up
+
+
+    #
+    # Add default route to your routing table if it doesn't exists yet
+    #
+    ip route add default via YOUR_ROUTER_IP dev NIC
+#+END_SRC
+
+
+Now, you should be able to connect to internet via your home router.
+
+
+** Install =netctl=
+
+- [[https://wiki.archlinux.org/index.php/netctl][netctl]]: A CLI and profile-based network manager.
+
+- =ifplugd=: A daemon which will automatically configure your Ethernet device when a cable is plugged in and automatically unconfigure it if the cable is pulled.
+
+- =wpa_supplicant=: A utility providing key negotiation for WPA wireless networks.
+
+- =dhcpcd=: DHCP/ IPv4LL/ IPv6RA/ DHCPv6 client.
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh netctl ifplugd wpa_supplicant dhcpcd
+#+END_SRC
+
+
+** Ethernet
+
+Copy the example ethernet profile to =/etc/netctl/=:
+
+#+BEGIN_SRC bash
+  #
+  # Run `ip addr` to check your ethernet NIC name!!!
+  #
+  doas cp -rvf /etc/netctl/examples/ethernet-dhcp /etc/netctl/NIC_NAME_HERE-dhcp
+
+#+END_SRC
+
+
+After that, make sure replace the NIC_NMAE inside the =NIC_NAME_HERE-dhcp= file, my =cat /etc/netctl/enp2s0-dhcp= output as an example:
+
+#+BEGIN_SRC conf
+  Description='A basic dhcp ethernet connection'
+  Interface=enp2s0
+  Connection=ethernet
+  IP=dhcp
+#+END_SRC
+
+
+Finally, enable =ifplugd= to automatically connect to any available wired network:
+
+#+BEGIN_SRC bash
+  systemctl enable netctl-ifplugd@NIC_NAME_HERE.service
+#+END_SRC
+
+
+** WIFI
+
+Copy the example wireless profile to =/etc/netctl/=:
+
+#+BEGIN_SRC bash
+  doas cp -rvf /etc/netctl/examples/wireless-wpa ./NIC_NAME_HERE-dhcp
+#+END_SRC
+
+
+After that, edit =NIC_NAME_HERE-dhcp= to change the nic name, WIFI =SSID= and =KEY= (encrypted password in HEX string)
+
+#+BEGIN_SRC conf
+  #
+  # Go to the bottom, run the command below to read the 
+  # `wpa_passphrase` result into current file.
+  #
+  :r !wpa_passphrase YOUR_SSID_HERE YOUR_WIFI_PASSWORD_TEXT_HERE | grep psk
+
+  #
+  # After that, you should get something like this:
+  # psk="XXXXXX" // That's encrypted WIFI PASS in HEX string
+  # 
+  # So you need to copy that "XXXX" hex string and make it looks like below
+  # to set the `Key` value.
+  # Make sure the value start with `\"` and then follow your HEX string
+  #
+  Key=\"XXXXXX
+
+  # Finally, enable the `Hidden=yes` line if your SSID is hidden.
+  # Then save and exit
+#+END_SRC
+
+
+My =cat /etc/netctl/wlp3s0= output as an example:
+
+#+BEGIN_SRC conf
+  Description='A simple WPA encrypted wireless connection'
+  Interface=wlp3s0
+  Connection=wireless
+
+  Security=wpa
+  IP=dhcp
+
+  ESSID='MY-SSID'
+  Hidden=yes
+  Key=\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  # Set a priority for automatic profile selection
+  #Priority=10
+#+END_SRC

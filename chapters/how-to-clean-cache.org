@@ -1,0 +1,56 @@
+* How to clean cache
+
+#+BEGIN_SRC bash
+  # Show how much your cache hold the disk space
+  dust -d1 ~/.cache
+
+  # Clean paru cache and unneeded dependencies
+  paru -Scc
+  rm -rf ~/.cache/paru/clone/*
+
+  # Clean pacman cache (it locates `/var/cache/pacman/pkg/`)
+  doas pacman -Scc
+
+  # Clean yarn (if you installed)
+  yarn cache clean
+
+  # Clean google-chrome cache (sometimes, this folder is huge!)
+  rm -rf ~/.cache/google-chrome/Default
+
+  # After that, calculate again, it should get big improved.
+  dust -d1 ~/.cache
+
+  #
+  # Clean cargo install stuff
+  #
+  cargo install cargo-cache
+  cargo cache --autoclean
+#+END_SRC
+
+
+** How to remove unused (dependencies) packages
+
+List only before removing:
+
+#+BEGIN_SRC bash
+  # -Q: Query packages.
+  # -d: List packages installed as dependencies [filter].
+  # -q: Show less information for query and search.
+  # -t: List packages not (optionally) required by any.
+  pacman -Qqtd 
+#+END_SRC
+
+
+After you confirm, remove all of them:
+
+#+BEGIN_SRC bash
+  # -R: Remove packages.
+  # -s: Remove unnecessary dependencies.
+  # -u: Remove unneeded packages.
+  # -n: Remove configuration file(s) too.
+  # - : Read package list from standard input/pipe. In this case read
+  #     output of query command (pacman -Qqd) and remove them using
+  #     the pacman -Rns - command.
+  pacman -Qtdq | doas pacman -Rns - 
+#+END_SRC
+

@@ -1,0 +1,11 @@
+*  My Arch Linux Handbook
+
+The old markdown version is here: git@github.com:wisonye/arch-linux.git
+
+** [[file:chapters/connect-wifi-during-installation.org][Connect to WIFI during installation]]
+** [[file:chapters/package-management.org][Package management]]
+** [[file:chapters/network-config-via-netctl.org][Network configuration via netctl]]
+** [[file:chapters/install-basic-tools-and-setup.org][Install basic tools and setup]]
+** How to
+*** [[file:chapters/how-to-clean-cache.org][Clean cache]]
+*** [[file:chapters/how-to-use-hyprctl.org][Use hyprctl]]
