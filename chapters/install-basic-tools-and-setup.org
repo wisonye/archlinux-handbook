@@ -252,6 +252,25 @@ Pay attention to the =backend= setting!!!
 
 
 
+** Cava: Console-based Audio Visualizer for Alsa
+
+#+BEGIN_SRC bash
+  paru --sync --refresh cava
+#+END_SRC
+
+
+If you want waybar support, then you have to remove the installed =waybar=, as the package version doesn't support =cava= module. You need to install the supported version by =paru=:
+
+#+BEGIN_SRC bash
+  doas pacman -Rsun waybar
+
+  paru --sync --refresh waybar-cava
+#+END_SRC
+
+
+After that, enable the "cava" module in your =~/.config/waybar/config=.
+
+
 ** Run =Hyprland=
 
 You should make sure that the following services are running:

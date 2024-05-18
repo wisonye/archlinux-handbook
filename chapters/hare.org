@@ -1,0 +1,42 @@
+* Hare
+
+** Install =hare=
+
+*** Instal via =paru=
+
+You have to enable =wheel= group by doing =doas visudo=, as =paru= use =sudo=!!!
+
+#+BEGIN_SRC bash
+  paru --sync --refresh hare-git harec-git 
+#+END_SRC
+
+After installation, disable =wheel= group by doing =doas visudo= again!!!
+
+
+*** Compile from source
+
+#+BEGIN_SRC bash
+  #
+  # install compiler backend
+  #
+  doas pacman --sync --refresh qbe scdoc
+
+
+  #
+  # Install the compiler frontend.
+  #
+  cd ~/temp
+  git clone depth=1 https://git.sr.ht/~sircmpwn/harec && cd harec
+  cp -rvf configs/linux.mk config.mk
+  doas make install
+
+  #
+  # Install the standard library and tools
+  #
+  cd ~/temp
+  git clone depth=1 https://git.sr.ht/~sircmpwn/hare && cd hare
+  cp -rvf configs/linux.mk config.mk
+  doas make install
+#+END_SRC
+
+

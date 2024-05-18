@@ -6,6 +6,9 @@ The old markdown version is here: git@github.com:wisonye/arch-linux.git
 ** [[file:chapters/package-management.org][Package management]]
 ** [[file:chapters/network-config-via-netctl.org][Network configuration via netctl]]
 ** [[file:chapters/install-basic-tools-and-setup.org][Install basic tools and setup]]
+** Development
+*** [[file:chapters/c-cpp.org][C/C++]]
+*** [[file:chapters/hare.org][Hare]]
 ** How to
 *** [[file:chapters/how-to-clean-cache.org][Clean cache]]
 *** [[file:chapters/how-to-use-hyprctl.org][Use hyprctl]]
