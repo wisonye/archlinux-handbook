@@ -46,12 +46,12 @@ If you don't know the =SSID= or not sure your =SSID= is scannable or not, then r
   #
   # Connect to public SSID
   #
-  iwctl station wlan0 connect SSID
+  iwctl station wlan0 connect "SSID"
 
   #
   # Or connect to hidden SSID
   #
-  iwctl station wlan0 connect-hidden SSID
+  iwctl station wlan0 connect-hidden "SSID"
 
   #
   # After that, check your IP address
