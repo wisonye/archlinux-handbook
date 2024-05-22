@@ -181,6 +181,13 @@ Install =paru=:
 #+END_SRC
 
 
+*** Generate and change color-schemes on the fly by =pywal-16-colors=
+
+#+BEGIN_SRC bash
+  paru --sync --refresh pywal-16-colors
+#+END_SRC
+
+
 *** How to set wallpaper
 
 #+BEGIN_SRC bash
@@ -440,3 +447,196 @@ Add the settings below to your =vimrc= or =init.vim= (for =neovim=):
 #+END_SRC
 
 Then run =:PlugInstall= and restart `vim` to take effect.
+
+
+** Bluetooth
+
+*** Install
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh bluez bluez-utils
+#+END_SRC
+
+
+*** Enable and start service
+
+#+BEGIN_SRC bash
+  doas systemctl enable bluetooth.service
+  doas systemctl restart bluetooth.service
+  systemctl status bluetooth.service
+#+END_SRC
+
+
+*** Make sure =rfkill= not block your bluetooth adapter
+
+=rfkill= a tool for enabling and disabling wireless device.
+
+#+BEGIN_SRC bash
+  doas rfkill list
+
+  # 0: hci0: Bluetooth
+  #         Soft blocked: no
+  #         Hard blocked: no
+  # 1: tpacpi_bluetooth_sw: Bluetooth
+  #         Soft blocked: no
+  #         Hard blocked: no
+  # 2: phy0: Wireless LAN
+  #         Soft blocked: no
+  #         Hard blocked: no
+#+END_SRC
+
+The case above means no block at all, that's fine. If you see it's blocked, then run the command below to unblock:
+
+#+BEGIN_SRC bash
+  doas rfkill unblock bluetooth
+#+END_SRC
+
+
+*** Scan, pair, connect and trust device
+
+First, turn off your bluetooth device which want to connect to.
+
+Run =bluetoothctl=, then follow the steps below to connect:
+
+#+BEGIN_SRC bash
+  #
+  # Make sure turn on the bluetooth
+  #
+  power on
+
+  #
+  # Enable scan, after that, bluetooth devices show up there one by one
+  #
+  scan on
+
+  #
+  # Right now, turn on your bluetooth device, then wait for it to show up.
+  # Hopefully, it shows its name directly which you can confirm that's your device.
+  # If it doesn't, only show the MAC ID, then copy that Id and run the
+  # command to confirm.
+  #
+  info XX:XX:XX:XX:XX:XX
+
+  #
+  # Once you confirm that your device, then do:
+  #
+  pair XX:XX:XX:XX:XX:XX
+
+  #
+  # After pairing, you can connect to it
+  #
+  connect XX:XX:XX:XX:XX:XX
+
+  #
+  # Optionally, you can trust it and it will auto connect next time
+  #
+  trust XX:XX:XX:XX:XX:XX
+
+  #
+  # Quit
+  #
+  quit
+#+END_SRC
+
+
+Here is the full example:
+
+#+BEGIN_SRC bash
+  #
+  # Power on and scan on
+  #
+  [bluetooth]# Agent registered
+  [bluetooth]# [CHG] Controller 50:76:AF:45:E1:BE Pairable: yes
+  [bluetooth]# power on
+  [bluetooth]# Changing power on succeeded
+  [bluetooth]# scan on
+  [bluetooth]# SetDiscoveryFilter success
+  [bluetooth]# Discovery started
+
+  #
+  # Start showing scanned devices
+  #
+  [bluetooth]# [CHG] Controller 50:76:AF:45:E1:BE Discovering: yes
+  [bluetooth]# [NEW] Device 5A:5D:6C:AA:14:90 5A-5D-6C-AA-14-90
+  [bluetooth]# [NEW] Device 67:FD:70:A2:5A:FF Cellar TV
+  [bluetooth]# [NEW] Device 60:21:AA:4E:F4:63 60-21-AA-4E-F4-63
+
+  #
+  # See my JBL headphone
+  #
+  [bluetooth]# [NEW] Device 84:D3:52:AD:CF:4F JBL TOUR ONE M2
+
+  #
+  # Pair
+  #
+  pair 84:D3:52:AD:CF:4F
+  Attempting to pair with 84:D3:52:AD:CF:4F
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F Bonded: yes
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F Modalias: bluetooth:v02B0p0000d001F
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F ServicesResolved: yes
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F Paired: yes
+  [JBL TOUR ONE M2]# Pairing successful
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F ServicesResolved: no
+  [CHG] Device 84:D3:52:AD:CF:4F Connected: no
+
+  #
+  # Connect to it after pairing
+  #
+  connect 84:D3:52:AD:CF:4F
+  Attempting to connect to 84:D3:52:AD:CF:4F
+  [CHG] Device 84:D3:52:AD:CF:4F Connected: yes
+  [JBL TOUR ONE M2]# [NEW] Endpoint /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep1
+  [JBL TOUR ONE M2]# [NEW] Endpoint /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep2
+  [JBL TOUR ONE M2]# [NEW] Transport /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep2/fd0
+  [JBL TOUR ONE M2]# [CHG] Transport /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep2/fd0 Delay: 0x05dc (1500)
+  [JBL TOUR ONE M2]# Connection successful
+  [JBL TOUR ONE M2]# [CHG] Transport /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep2/fd0 Volume: 0x004f (79)
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F ServicesResolved: yes
+
+  #
+  # Trust it after connecting
+  #
+  [JBL T84:D3:52:AD:CF:4Ft 84:D3:52:AD:CF:4F
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F Trusted: yes
+  [JBL TOUR ONE M2]# Changing 84:D3:52:AD:CF:4F trust succeeded
+
+  #
+  # Exit
+  #
+  quit
+#+END_SRC
+
+
+*** =bluetoothctl= usage
+
+**** List aviablable devices (your onboard bluetooth chipset)
+
+#+BEGIN_SRC bash
+  bluetoothctl list
+  # Controller 50:76:AF:45:E1:BE my-arch [default]
+#+END_SRC
+
+
+**** List all (Paired/Connected/Trusted) deivces
+
+#+BEGIN_SRC bash
+  bluetoothctl devices
+  # Device 84:D3:52:AD:CF:4F JBL TOUR ONE M2
+
+  #
+  # Or you can list devices with filter condition: Trusted/Paired/Connected
+  #
+  bluetoothctl devices Paired
+  # Device 84:D3:52:AD:CF:4F JBL TOUR ONE M2
+#+END_SRC
+
+
+*** Connect trusted device by script
+
+Create =~/connect-bluetooth.sh= with the following content:
+
+#+BEGIN_SRC bash
+  #!/bin/sh
+  bluetoothctl -- power on
+  bluetoothctl -- connect 84:D3:52:AD:CF:4F
+#+END_SRC

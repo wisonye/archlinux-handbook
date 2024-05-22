@@ -134,3 +134,26 @@ My =cat /etc/netctl/wlp3s0= output as an example:
   # Set a priority for automatic profile selection
   #Priority=10
 #+END_SRC
+
+
+** Thinkpad X1 Yoga Gen 3
+
+Ethernet uses =e1000e= module and WIFI use =iwlwifi= module.
+
+#+BEGIN_SRC bash
+  00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection (4) I219-LM (rev 21)
+      Subsystem: Lenovo Device 2259
+      Flags: bus master, fast devsel, latency 0, IRQ 140
+      Memory at ee300000 (32-bit, non-prefetchable) [size=128K]
+      Capabilities: <access denied>
+      Kernel driver in use: e1000e
+      Kernel modules: e1000e
+
+  02:00.0 Network controller: Intel Corporation Wireless 8265 / 8275 (rev 78)
+      Subsystem: Intel Corporation Dual Band Wireless-AC 8265 [Windstorm Peak]
+      Flags: bus master, fast devsel, latency 0, IRQ 158
+      Memory at ee200000 (64-bit, non-prefetchable) [size=8K]
+      Capabilities: <access denied>
+      Kernel driver in use: iwlwifi
+      Kernel modules: iwlwifi
+#+END_SRC

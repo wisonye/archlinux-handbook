@@ -1,0 +1,125 @@
+* How to show hardware info
+
+** =fastfetch= for overview
+
+CPU, GPU, RAM, Disk, Battery...
+
+#+BEGIN_SRC bash
+  fastfetch
+
+  #                    -`                     wison@my-arch
+  #                   .o+`                    -------------
+  #                  `ooo/                    OS: Arch Linux x86_64
+  #                 `+oooo:                   Host: 20LES4MF00 (ThinkPad X1 Yoga 3rd)
+  #                `+oooooo:                  Kernel: Linux 6.6.31-1-lts
+  #                -+oooooo+:                 Uptime: 39 mins
+  #              `/:-:++oooo+:                Packages: 561 (pacman)
+  #             `/++++/+++++++:               Shell: fish 3.7.1
+  #            `/++++++++++++++:              Display (CMN14E1): 1920x1080 @ 60Hz [Built-in]
+  #           `/+++ooooooooooooo/`            WM: Hyprland (Wayland)
+  #          ./ooosssso++osssssso+`           Cursor: Adwaita
+  #         .oossssso-````/ossssss+`          Terminal: tmux 3.4
+  #        -osssssso.      :ssssssso.         CPU: Intel(R) Core(TM) i7-8650U (8) @ 4.20 GHz
+  #       :osssssss/        osssso+++.        GPU: Intel UHD Graphics 620 @ 1.15 GHz [Integrated]
+  #      /ossssssss/        +ssssooo/-        Memory: 1.17 GiB / 15.37 GiB (8%)
+  #    `/ossssso+/:-        -:/+osssso+-      Swap: 0 B / 4.00 GiB (0%)
+  #   `+sso+:-`                 `.-/+oso:     Disk (/): 7.02 GiB / 467.40 GiB (2%) - ext4
+  #  `++:.                           `-/+/    Local IP (wlp2s0): 192.168.1.183/24 *
+  #  .`                                 `/    Battery: 56% [Discharging]
+  #                                           Locale: en_US.UTF-8
+#+END_SRC
+
+
+** CPU
+
+#+BEGIN_SRC bash
+  lscpu | bat
+
+  # Architecture:                         x86_64
+  # CPU op-mode(s):                       32-bit, 64-bit
+  # Address sizes:                        39 bits physical, 48 bits virtual
+  # Byte Order:                           Little Endian
+  # CPU(s):                               8
+  # On-line CPU(s) list:                  0-7
+  # Vendor ID:                            GenuineIntel
+  # Model name:                           Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz
+  # CPU family:                           6
+  # Model:                                142
+  # Thread(s) per core:                   2
+  # Core(s) per socket:                   4
+  # Socket(s):                            1
+  # Stepping:                             10
+  # CPU(s) scaling MHz:                   37%
+  # CPU max MHz:                          4200.0000
+  # CPU min MHz:                          400.0000
+  # BogoMIPS:                             4201.88
+  # Virtualization:                       VT-x
+  # L1d cache:                            128 KiB (4 instances)
+  # L1i cache:                            128 KiB (4 instances)
+  # L2 cache:                             1 MiB (4 instances)
+  # L3 cache:                             8 MiB (1 instance)
+  # NUMA node(s):                         1
+  # NUMA node0 CPU(s):                    0-7
+#+END_SRC
+
+
+** CPU current frequency
+
+#+BEGIN_SRC bash
+  bat /proc/cpuinfo | rg "cpu MHz"
+
+  # cpu MHz         : 1943.300
+  # cpu MHz         : 2121.079
+  # cpu MHz         : 1721.701
+  # cpu MHz         : 1945.442
+  # cpu MHz         : 818.975
+  # cpu MHz         : 400.000
+  # cpu MHz         : 2000.231
+  # cpu MHz         : 994.163 
+#+END_SRC
+
+Or you can open =btop= to see.
+
+
+** GPU
+
+#+BEGIN_SRC bash
+  lspci -v | rg -A10 "VGA compatible"
+
+  # 00:02.0 VGA compatible controller: Intel Corporation UHD Graphics 620 (rev 07) (prog-if 00 [VGA controller])
+  #         Subsystem: Lenovo Device 2259
+  #         Flags: bus master, fast devsel, latency 0, IRQ 159
+  #         Memory at 2ffa000000 (64-bit, non-prefetchable) [size=16M]
+  #         Memory at 2fa0000000 (64-bit, prefetchable) [size=256M]
+  #         I/O ports at e000 [size=64]
+  #         Expansion ROM at 000c0000 [virtual] [disabled] [size=128K]
+  #         Capabilities: <access denied>
+  #         Kernel driver in use: i915
+  #         Kernel modules: i915
+#+END_SRC
+
+
+** Network
+
+#+BEGIN_SRC bash
+  lspci -v | rg -A6 -e "Ethernet controller" -e "Network controller"
+
+  # 00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection (4) I219-LM (rev 21)
+  #         Subsystem: Lenovo Device 2259
+  #         Flags: bus master, fast devsel, latency 0, IRQ 140
+  #         Memory at ee300000 (32-bit, non-prefetchable) [size=128K]
+  #         Capabilities: <access denied>
+  #         Kernel driver in use: e1000e
+  #         Kernel modules: e1000e
+  # --
+  # 02:00.0 Network controller: Intel Corporation Wireless 8265 / 8275 (rev 78)
+  #         Subsystem: Intel Corporation Dual Band Wireless-AC 8265 [Windstorm Peak]
+  #         Flags: bus master, fast devsel, latency 0, IRQ 158
+  #         Memory at ee200000 (64-bit, non-prefetchable) [size=8K]
+  #         Capabilities: <access denied>
+  #         Kernel driver in use: iwlwifi
+  #         Kernel modules: iwlwifi
+#+END_SRC
+
+
+** Battery
