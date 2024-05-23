@@ -191,3 +191,69 @@ Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz
   BIOS Revision: 1.49
   Firmware Revision: 1.21
 #+END_SRC
+
+
+** Fix touchscreen after resume
+
+Touchscreen doesn't work after suspend and resume, here is the solution:
+
+*** Install =acpi_call= kernel module
+
+#+BEGIN_SRC bash
+  #
+  # If you use normal kernel
+  #
+  # doas pacman --sync --refresh acpi_call
+
+  #
+  # If you use `lts` kernel
+  #
+  doas pacman --sync --refresh acpi_call-lts
+#+END_SRC
+
+
+*** Create =/etc/systemd/system/activate-touch-hack.service=
+
+Create =/etc/systemd/system/activate-touch-hack.service= with the following contents:
+
+#+BEGIN_SRC bash
+  [Unit]
+  Description=Touch wake Thinkpad X1 Yoga 3rd gen hack
+  After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+
+  [Service]
+  ExecStart=/bin/sh -c "echo '\\_SB.PCI0.LPCB.EC._Q2A'  > /proc/acpi/call"
+
+  [Install]
+  WantedBy=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+#+END_SRC
+
+
+Enable service:
+
+#+BEGIN_SRC bash
+  doas systemctl enable activate-touch-hack.service
+#+END_SRC
+
+
+*** Reboot to take affect
+
+Make sure =acpi_call= module has been loaded:
+
+#+BEGIN_SRC bash
+  lsmod | rg acpi_call
+
+  # acpi_call              16384  0 
+#+END_SRC
+
+
+Make sure =/proc/acpi/call= exists:
+
+#+BEGIN_SRC bash
+  ls -lht /proc/acpi/call
+
+  # -rw-rw---- 1 root root 0 May 23 17:56 /proc/acpi/call
+#+END_SRC
+
+
+Now, it should work as expected.
