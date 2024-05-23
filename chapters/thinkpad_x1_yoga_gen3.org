@@ -257,3 +257,74 @@ Make sure =/proc/acpi/call= exists:
 
 
 Now, it should work as expected.
+
+
+** Auto rotate monitor and touch pad and tablet based on builtin =Accelerometer= sensor
+
+*** Install =iio-sensor-proxy=
+
+#+BEGIN_SRC bash
+  #
+  # Install
+  #
+  doas pacman --sync --refresh iio-sensor-proxy
+
+  #
+  # Enable service
+  #
+  doas systemctl enable iio-sensor-proxy.service
+
+  #
+  # Start service
+  #
+  doas systemctl restart iio-sensor-proxy.service
+#+END_SRC
+
+
+Test it by running =monitor-sensor=:
+
+#+BEGIN_SRC bash
+  monitor-sensor --all
+
+  #     Waiting for iio-sensor-proxy to appear
+  # +++ iio-sensor-proxy appeared
+  # === Has accelerometer (orientation: normal)
+  # === Has ambient light sensor (value: 17.133001, unit: lux)
+  # === No proximity sensor
+  #     Light changed: 24.325001 (lux)
+  #     Accelerometer orientation changed: right-up
+  #     Accelerometer orientation changed: left-up
+  #     Light changed: 55.843003 (lux)
+  #     Accelerometer orientation changed: bottom-up
+  #     Light changed: 40.507002 (lux)
+  #     Light changed: 31.517001 (lux)
+  #     Accelerometer orientation changed: normal
+  #     Light changed: 97.515005 (lux)
+  #     Light changed: 25.066001 (lux) 
+#+END_SRC
+
+Rotate your laptop and you should see the above sensor events.
+
+
+*** Install =iio-hyprland=
+
+#+BEGIN_SRC bash
+  cd ~/temp
+  git clone --depth=1 git@github.com:wisonye/iio-hyprland.git
+  cd iio-hyprland
+  cd c
+  ./configure.sh
+  doas ./install.sh
+#+END_SRC
+
+
+Start it in =~/.config/hypr/hyprland.conf=:
+
+#+BEGIN_SRC conf
+  #
+  # Auto rotate monitor and touchpad/Tablet when detected orientation changed
+  #
+  exec-once = iio-hyprland
+#+END_SRC
+
+Restart =Hyprland= to take affect.
