@@ -1,0 +1,193 @@
+* Thinkpad X1 Yoga Gen 3
+
+** Hardware information
+
+Information comes from =dmidecode= output:
+
+*** System Information
+
+#+BEGIN_SRC bash
+  Manufacturer: LENOVO
+  Product Name: 20LES4MF00
+  Version: ThinkPad X1 Yoga 3rd
+  Serial Number: R90SW4EG
+  UUID: e700174c-3576-11b2-a85c-9d756357a7fc
+  Wake-up Type: Power Switch
+  SKU Number: LENOVO_MT_20LE_BU_Think_FM_ThinkPad X1 Yoga 3rd
+  Family: ThinkPad X1 Yoga 3rd
+#+END_SRC
+
+
+*** Base Board Information
+
+#+BEGIN_SRC bash
+  Manufacturer: LENOVO
+  Product Name: 20LES4MF00
+  Version: SDK0J40697 WIN
+  Serial Number: W2KS8CT10KA
+  Asset Tag: Not Available
+  Features:
+      Board is a hosting board
+      Board is replaceable
+  Location In Chassis: Not Available
+  Chassis Handle: 0x0000
+  Type: Motherboard
+  Contained Object Handles: 0
+#+END_SRC
+
+
+*** Chassis Information 
+
+#+BEGIN_SRC bash
+  Manufacturer: LENOVO
+  Type: Convertible
+  Lock: Not Present
+  Version: None
+  Serial Number: R90SW4EG
+  Asset Tag: LT58841
+  Boot-up State: Unknown
+  Power Supply State: Unknown
+  Thermal State: Unknown
+  Security Status: Unknown
+  OEM Information: 0x00000000
+  Height: Unspecified
+  Number Of Power Cords: Unspecified
+  Contained Elements: 0
+  SKU Number: Not Specified
+#+END_SRC
+
+
+*** Battery
+
+#+BEGIN_SRC bash
+  Location: Front
+  Manufacturer: Celxpert
+  Name: 01AV475
+  Design Capacity: 54060 mWh
+  Design Voltage: 15360 mV
+  SBDS Version: 03.01
+  Maximum Error: Unknown
+  SBDS Serial Number: 1389
+  SBDS Manufacture Date: 2018-11-26
+  SBDS Chemistry: LiP
+  OEM-specific Information: 0x00000000
+#+END_SRC
+
+
+*** CPU
+
+Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz
+
+#+BEGIN_SRC bash
+  Socket Designation: U3E1
+  Type: Central Processor
+  Family: Core i7
+  Manufacturer: Intel(R) Corporation
+  ID: EA 06 08 00 FF FB EB BF
+  Signature: Type 0, Family 6, Model 142, Stepping 10
+  Version: Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz
+  Voltage: 1.1 V
+  External Clock: 100 MHz
+  Max Speed: 2100 MHz
+  Current Speed: 1900 MHz
+  Status: Populated, Enabled
+  Upgrade: Socket BGA1356
+  L1 Cache Handle: 0x0007
+  L2 Cache Handle: 0x0008
+  L3 Cache Handle: 0x0009
+  Serial Number: None
+  Asset Tag: None
+  Part Number: None
+  Core Count: 4
+  Core Enabled: 4
+#+END_SRC
+
+
+*** Memory Device
+
+16GB soldered LPDDR3 2133 MT/s:
+
+#+BEGIN_SRC bash
+  #
+  # ChannelA-DIMM0
+  #
+  Array Handle: 0x0003
+  Error Information Handle: Not Provided
+  Total Width: 64 bits
+  Data Width: 64 bits
+  Size: 8 GB
+  Form Factor: Row Of Chips
+  Set: None
+  Locator: ChannelA-DIMM0
+  Bank Locator: BANK 0
+  Type: LPDDR3
+  Type Detail: Synchronous Unbuffered (Unregistered)
+  Speed: 2133 MT/s
+  Manufacturer: Samsung
+  Serial Number: 55000000
+  Asset Tag: None
+  Part Number: K4EBE304EB-EGCG
+  Rank: 2
+  Configured Memory Speed: 2133 MT/s
+  Minimum Voltage: Unknown
+  Maximum Voltage: Unknown
+  Configured Voltage: 1.2 V
+
+  #
+  # ChannelB-DIMM0
+  #
+  Array Handle: 0x0003
+  Error Information Handle: Not Provided
+  Total Width: 64 bits
+  Data Width: 64 bits
+  Size: 8 GB
+  Form Factor: Row Of Chips
+  Set: None
+  Locator: ChannelB-DIMM0
+  Bank Locator: BANK 2
+  Type: LPDDR3
+  Type Detail: Synchronous Unbuffered (Unregistered)
+  Speed: 2133 MT/s
+  Manufacturer: Samsung
+  Serial Number: 55000000
+  Asset Tag: None
+  Part Number: K4EBE304EB-EGCG
+  Rank: 2
+  Configured Memory Speed: 2133 MT/s
+  Minimum Voltage: Unknown
+  Maximum Voltage: Unknown
+  Configured Voltage: 1.2 V
+#+END_SRC
+
+
+*** BIOS information
+
+#+BEGIN_SRC bash
+  Vendor: LENOVO
+  Version: N25ET63W (1.49 )
+  Release Date: 12/20/2022
+  Address: 0xE0000
+  Runtime Size: 128 kB
+  ROM Size: 16 MB
+  Characteristics:
+      PCI is supported
+      PNP is supported
+      BIOS is upgradeable
+      BIOS shadowing is allowed
+      Boot from CD is supported
+      Selectable boot is supported
+      EDD is supported
+      3.5"/720 kB floppy services are supported (int 13h)
+      Print screen service is supported (int 5h)
+      8042 keyboard services are supported (int 9h)
+      Serial services are supported (int 14h)
+      Printer services are supported (int 17h)
+      CGA/mono video services are supported (int 10h)
+      ACPI is supported
+      USB legacy is supported
+      BIOS boot specification is supported
+      Targeted content distribution is supported
+      UEFI is supported
+  BIOS Revision: 1.49
+  Firmware Revision: 1.21
+#+END_SRC

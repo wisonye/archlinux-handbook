@@ -10,7 +10,7 @@ The old markdown version is here: git@github.com:wisonye/arch-linux.git
 *** [[file:chapters/c-cpp.org][C/C++]]
 *** [[file:chapters/hare.org][Hare]]
 ** Hardware tweaks
-*** Thinkpad X1 Yoga Gen
+*** [[file:chapters/thinkpad_x1_yoga_gen3.org][Thinkpad X1 Yoga Gen 3]]
 ** How to
 *** [[file:chapters/how-to-show-hardware-info.org][Show hardware info]]
 *** [[file:chapters/how-to-clean-cache.org][Clean cache]]
