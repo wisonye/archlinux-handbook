@@ -640,3 +640,21 @@ Create =~/connect-bluetooth.sh= with the following content:
   bluetoothctl -- power on
   bluetoothctl -- connect 84:D3:52:AD:CF:4F
 #+END_SRC
+
+
+** Install =Brave= browser
+
+#+BEGIN_SRC bash
+  paru --sync --refresh brave-bin
+#+END_SRC
+
+Open =brave= and open URL =brave://flags=, then search for =ozone=, choose =wayland= in the dropdown menu.
+
+
+** Install chinese fonts
+
+#+BEGIN_SRC bash
+  paru --sync --refresh adobe-source-han-mono-cn-fonts \
+    adobe-source-han-sans-cn-fonts \
+    adobe-source-han-serif-cn-fonts
+#+END_SRC
