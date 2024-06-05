@@ -50,7 +50,7 @@ Make sure to change the file permission:
   #
   # Hyprland
   #
-  doas pacman --sync --refresh hyprland xdg-desktop-portal-hyprland dunst qt6-wayland wl-clipboard alacritty tmux waybar mpv yt-dlp grim slurp nsxiv
+  doas pacman --sync --refresh hyprland xdg-desktop-portal-hyprland dunst qt6-wayland wl-clipboard alacritty tmux waybar mpv yt-dlp grim slurp nsxiv pavucontrol
 #+END_SRC
 
 
@@ -100,6 +100,7 @@ Relogin to take effect.
   git config --global delta.show-syntax-themes true
   git config --global merge.conflictstyle diff3
   git config --global diff.colorMoved default
+  git config --global init.defaultBranch master
 #+END_SRC
 
 
@@ -177,6 +178,13 @@ Install =paru=:
   # and choose =rustup= (option =2=)!!!
   #
   paru --sync --refresh swww
+#+END_SRC
+
+
+*** Generate and change color-schemes on the fly by =pywal-16-colors=
+
+#+BEGIN_SRC bash
+  paru --sync --refresh pywal-16-colors
 #+END_SRC
 
 
@@ -442,3 +450,351 @@ Also, =xdg-desktop-portal-hyprland= should start automatically:
 
 Have a look at here to know more about =xdg-desktop-portal-hyprland (XDPH)=:
 https://wiki.hyprland.org/Useful-Utilities/xdg-desktop-portal-hyprland/
+
+
+** Install nerd font
+
+=Nerd Fonts= is a project that patches developer targeted fonts with a high number of glyphs (icons). Basically, it adds all popular icons into the popular fonts which call `patched font` which include the original font and all supported icons. Then you can use any of those `patched font` to show any supported icons below:
+
+*** Installation
+
+It has 7 optional ways to install =Nerd Fonts=. But for =Arch=, you can install via =AUR=. Let's take the =Source Code Pro= at an example:
+
+#+BEGIN_SRC bash
+  paru -S nerd-fonts-source-code-pro
+
+  # If you use new version Arch Linux, use this as a replcement
+  paru -S ttf-sourcecodepro-nerd
+#+END_SRC
+
+
+After installing, you can run the command below to show the installed location:
+
+#+BEGIN_SRC bash
+  paru --query --list nerd-fonts-source-code-pro
+
+  # If you use new version Arch Linux, use this as a replcement
+  paru --query --list ttf-sourcecodepro-nerd
+
+  # /usr/share/fonts/TTF/Sauce Code Pro Black Italic Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Black Italic Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Black Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Black Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Bold Italic Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Bold Italic Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Bold Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Bold Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro ExtraLight Italic Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro ExtraLight Italic Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro ExtraLight Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro ExtraLight Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Italic Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Italic Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Light Italic Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Light Italic Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Light Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Light Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Medium Italic Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Medium Italic Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Medium Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Medium Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Semibold Italic Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Semibold Italic Nerd Font Complete.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Semibold Nerd Font Complete Mono.ttf
+  # /usr/share/fonts/TTF/Sauce Code Pro Semibold Nerd Font Complete.ttf
+#+END_SRC
+
+
+*** Setup correct font name
+
+As you can see that, the font name is NOT the =Source Code Pro=!!! So you have to run the command below to know the =Real font name= which you can fill into any application's font configuration file:
+
+#+BEGIN_SRC bash
+  fc-list | grep Pro
+
+  # /usr/share/fonts/TTF/Sauce Code Pro Light Italic Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Light Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Black Italic Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Black Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Semibold Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Semibold,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Bold Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Bold
+  # /usr/share/fonts/TTF/Sauce Code Pro Semibold Italic Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Semibold Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Italic Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Light Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Light,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Italic Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Bold Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Bold
+  # /usr/share/fonts/TTF/Sauce Code Pro Medium Italic Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Medium Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Medium Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Medium,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro ExtraLight Italic Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=ExtraLight Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Bold Italic Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Bold Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Medium Italic Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Medium Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Light Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Light,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Bold Italic Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Bold Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro ExtraLight Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=ExtraLight,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Black Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Black,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Black Italic Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Black Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro ExtraLight Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=ExtraLight,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Medium Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Medium,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Black Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Black,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Semibold Italic Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Semibold Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro ExtraLight Italic Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=ExtraLight Italic,Italic
+  # /usr/share/fonts/TTF/Sauce Code Pro Nerd Font Complete Mono.ttf: SauceCodePro Nerd Font Mono:style=Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Semibold Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Semibold,Regular
+  # /usr/share/fonts/TTF/Sauce Code Pro Light Italic Nerd Font Complete.ttf: SauceCodePro Nerd Font:style=Light Italic,Italic
+#+END_SRC
+
+Right now, you should notice that the font name is either =SauceCodePro Nerd Font Mono= or =SauceCodePro Nerd Font=. So fill them into your application font configuration file.
+
+For example, put it into the =Alacritty= configuration file:
+
+#+BEGIN_SRC conf
+  # Bold italic font face
+  bold_italic:
+
+  # Font family
+  #
+  # If the bold italic family is not specified, it will fall back to the
+  # value specified for the normal font.
+  family: "SauceCodePro Nerd Font"
+
+  # The `style` can be specified to pick a specific face.
+  style: Bold Italic
+#+END_SRC
+
+
+*** Copy icons from =NerdFont= cheatsheet
+
+After setting the correct font name, then you can copy and paste the icons from the [[https://www.nerdfonts.com/cheat-shee][NerdFont cheatsheet]] :
+
+
+Just type any searching keyword there, place the mouse on top of the one you like, it will show up a popup menu on the right-top corner. So, click =Icon= to copy to clipbobard, then you can paste to anywhere to have that icon.
+
+
+*** =Vim= support
+
+Add the settings below to your =vimrc= or =init.vim= (for =neovim=):
+
+#+BEGIN_SRC bash
+  # 
+  Plug 'ryanoasis/vim-devicons'
+
+  # Set the `guifont` to your patched font name with the size
+  set guifont=SauceCodePro\ Nerd\ Font\ 11
+
+  # Enable this line if you use `vim-airline`
+  let g:airline_powerline_fonts = 1
+#+END_SRC
+
+Then run =:PlugInstall= and restart `vim` to take effect.
+
+
+** Bluetooth
+
+*** Install
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh bluez bluez-utils
+#+END_SRC
+
+
+*** Enable and start service
+
+#+BEGIN_SRC bash
+  doas systemctl enable bluetooth.service
+  doas systemctl restart bluetooth.service
+  systemctl status bluetooth.service
+#+END_SRC
+
+
+*** Make sure =rfkill= not block your bluetooth adapter
+
+=rfkill= a tool for enabling and disabling wireless device.
+
+#+BEGIN_SRC bash
+  doas rfkill list
+
+  # 0: hci0: Bluetooth
+  #         Soft blocked: no
+  #         Hard blocked: no
+  # 1: tpacpi_bluetooth_sw: Bluetooth
+  #         Soft blocked: no
+  #         Hard blocked: no
+  # 2: phy0: Wireless LAN
+  #         Soft blocked: no
+  #         Hard blocked: no
+#+END_SRC
+
+The case above means no block at all, that's fine. If you see it's blocked, then run the command below to unblock:
+
+#+BEGIN_SRC bash
+  doas rfkill unblock bluetooth
+#+END_SRC
+
+
+*** Scan, pair, connect and trust device
+
+First, turn off your bluetooth device which want to connect to.
+
+Run =bluetoothctl=, then follow the steps below to connect:
+
+#+BEGIN_SRC bash
+  #
+  # Make sure turn on the bluetooth
+  #
+  power on
+
+  #
+  # Enable scan, after that, bluetooth devices show up there one by one
+  #
+  scan on
+
+  #
+  # Right now, turn on your bluetooth device, then wait for it to show up.
+  # Hopefully, it shows its name directly which you can confirm that's your device.
+  # If it doesn't, only show the MAC ID, then copy that Id and run the
+  # command to confirm.
+  #
+  info XX:XX:XX:XX:XX:XX
+
+  #
+  # Once you confirm that your device, then do:
+  #
+  pair XX:XX:XX:XX:XX:XX
+
+  #
+  # After pairing, you can connect to it
+  #
+  connect XX:XX:XX:XX:XX:XX
+
+  #
+  # Optionally, you can trust it and it will auto connect next time
+  #
+  trust XX:XX:XX:XX:XX:XX
+
+  #
+  # Quit
+  #
+  quit
+#+END_SRC
+
+
+Here is the full example:
+
+#+BEGIN_SRC bash
+  #
+  # Power on and scan on
+  #
+  [bluetooth]# Agent registered
+  [bluetooth]# [CHG] Controller 50:76:AF:45:E1:BE Pairable: yes
+  [bluetooth]# power on
+  [bluetooth]# Changing power on succeeded
+  [bluetooth]# scan on
+  [bluetooth]# SetDiscoveryFilter success
+  [bluetooth]# Discovery started
+
+  #
+  # Start showing scanned devices
+  #
+  [bluetooth]# [CHG] Controller 50:76:AF:45:E1:BE Discovering: yes
+  [bluetooth]# [NEW] Device 5A:5D:6C:AA:14:90 5A-5D-6C-AA-14-90
+  [bluetooth]# [NEW] Device 67:FD:70:A2:5A:FF Cellar TV
+  [bluetooth]# [NEW] Device 60:21:AA:4E:F4:63 60-21-AA-4E-F4-63
+
+  #
+  # See my JBL headphone
+  #
+  [bluetooth]# [NEW] Device 84:D3:52:AD:CF:4F JBL TOUR ONE M2
+
+  #
+  # Pair
+  #
+  pair 84:D3:52:AD:CF:4F
+  Attempting to pair with 84:D3:52:AD:CF:4F
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F Bonded: yes
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F Modalias: bluetooth:v02B0p0000d001F
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F ServicesResolved: yes
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F Paired: yes
+  [JBL TOUR ONE M2]# Pairing successful
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F ServicesResolved: no
+  [CHG] Device 84:D3:52:AD:CF:4F Connected: no
+
+  #
+  # Connect to it after pairing
+  #
+  connect 84:D3:52:AD:CF:4F
+  Attempting to connect to 84:D3:52:AD:CF:4F
+  [CHG] Device 84:D3:52:AD:CF:4F Connected: yes
+  [JBL TOUR ONE M2]# [NEW] Endpoint /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep1
+  [JBL TOUR ONE M2]# [NEW] Endpoint /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep2
+  [JBL TOUR ONE M2]# [NEW] Transport /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep2/fd0
+  [JBL TOUR ONE M2]# [CHG] Transport /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep2/fd0 Delay: 0x05dc (1500)
+  [JBL TOUR ONE M2]# Connection successful
+  [JBL TOUR ONE M2]# [CHG] Transport /org/bluez/hci0/dev_84_D3_52_AD_CF_4F/sep2/fd0 Volume: 0x004f (79)
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F ServicesResolved: yes
+
+  #
+  # Trust it after connecting
+  #
+  [JBL T84:D3:52:AD:CF:4Ft 84:D3:52:AD:CF:4F
+  [JBL TOUR ONE M2]# [CHG] Device 84:D3:52:AD:CF:4F Trusted: yes
+  [JBL TOUR ONE M2]# Changing 84:D3:52:AD:CF:4F trust succeeded
+
+  #
+  # Exit
+  #
+  quit
+#+END_SRC
+
+
+*** =bluetoothctl= usage
+
+**** List aviablable devices (your onboard bluetooth chipset)
+
+#+BEGIN_SRC bash
+  bluetoothctl list
+  # Controller 50:76:AF:45:E1:BE my-arch [default]
+#+END_SRC
+
+
+**** List all (Paired/Connected/Trusted) deivces
+
+#+BEGIN_SRC bash
+  bluetoothctl devices
+  # Device 84:D3:52:AD:CF:4F JBL TOUR ONE M2
+
+  #
+  # Or you can list devices with filter condition: Trusted/Paired/Connected
+  #
+  bluetoothctl devices Paired
+  # Device 84:D3:52:AD:CF:4F JBL TOUR ONE M2
+#+END_SRC
+
+
+*** Connect trusted device by script
+
+Create =~/connect-bluetooth.sh= with the following content:
+
+#+BEGIN_SRC bash
+  #!/bin/sh
+  bluetoothctl -- power on
+  bluetoothctl -- connect 84:D3:52:AD:CF:4F
+#+END_SRC
+
+
+** Install =Brave= browser
+
+#+BEGIN_SRC bash
+  paru --sync --refresh brave-bin
+#+END_SRC
+
+Open =brave= and open URL =brave://flags=, then search for =ozone=, choose =wayland= in the dropdown menu.
+
+
+** Install chinese fonts
+
+#+BEGIN_SRC bash
+  paru --sync --refresh adobe-source-han-mono-cn-fonts \
+    adobe-source-han-sans-cn-fonts \
+    adobe-source-han-serif-cn-fonts
+#+END_SRC

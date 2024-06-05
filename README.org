@@ -9,6 +9,9 @@ The old markdown version is here: git@github.com:wisonye/arch-linux.git
 ** Development
 *** [[file:chapters/c-cpp.org][C/C++]]
 *** [[file:chapters/hare.org][Hare]]
+** Hardware tweaks
+*** [[file:chapters/thinkpad_x1_yoga_gen3.org][Thinkpad X1 Yoga Gen 3]]
 ** How to
+*** [[file:chapters/how-to-show-hardware-info.org][Show hardware info]]
 *** [[file:chapters/how-to-clean-cache.org][Clean cache]]
 *** [[file:chapters/how-to-use-hyprctl.org][Use hyprctl]]

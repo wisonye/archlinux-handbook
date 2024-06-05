@@ -26,7 +26,7 @@ After installation, disable =wheel= group by doing =doas visudo= again!!!
   # Install the compiler frontend.
   #
   cd ~/temp
-  git clone depth=1 https://git.sr.ht/~sircmpwn/harec && cd harec
+  git clone --depth=1 https://git.sr.ht/~sircmpwn/harec && cd harec
   cp -rvf configs/linux.mk config.mk
   doas make install
 
@@ -34,8 +34,9 @@ After installation, disable =wheel= group by doing =doas visudo= again!!!
   # Install the standard library and tools
   #
   cd ~/temp
-  git clone depth=1 https://git.sr.ht/~sircmpwn/hare && cd hare
+  git clone --depth=1 https://git.sr.ht/~sircmpwn/hare && cd hare
   cp -rvf configs/linux.mk config.mk
+  make
   doas make install
 #+END_SRC
 
