@@ -252,6 +252,101 @@ Pay attention to the =backend= setting!!!
 
 
 
+** Generate dynamic colors from a given wallpaper
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh pywal-16-colors
+#+END_SRC
+
+Then you can run =wal -i {FULLPATH_WALLPAPER_HERE}= to generate ~/.cache/wal~ folder that contains a lot of supported color templates.
+
+You can add your own template files to =~/.config/wal/templates= folder to support what it's missing. Basically, you just need to add those ={colorX.strip}= templates in the correct syntax for your export target to set the special env vars.
+
+For example, for =Hyprland= and =Fish=, you need to add the following template files to =~/.config/wal/templates=:
+
+***  =~/.config/wal/templates/colors-hyprland.conf=
+
+#+BEGIN_SRC conf
+  $foreground = rgb({foreground.strip})
+  $background = rgb({background.strip})
+  $wallpaper = {wallpaper}
+
+  $color0 = rgb({color0.strip})
+  $color1 = rgb({color1.strip})
+  $color2 = rgb({color2.strip})
+  $color3 = rgb({color3.strip})
+  $color4 = rgb({color4.strip})
+  $color5 = rgb({color5.strip})
+  $color6 = rgb({color6.strip})
+  $color7 = rgb({color7.strip})
+  $color8 = rgb({color8.strip})
+  $color9 = rgb({color9.strip})
+  $color10 = rgb({color10.strip})
+  $color11 = rgb({color11.strip})
+  $color12 = rgb({color12.strip})
+  $color13 = rgb({color13.strip})
+  $color14 = rgb({color14.strip})
+  $color15 = rgb({color15.strip})
+#+END_SRC
+
+
+***  =~/.config/wal/templates/colors-fish.fish=
+
+#+BEGIN_SRC conf
+  set --export foreground {foreground.strip}
+  set --export background {background.strip}
+  set --export color0 {color0.strip}
+  set --export color1 {color1.strip}
+  set --export color2 {color2.strip}
+  set --export color3 {color3.strip}
+  set --export color4 {color4.strip}
+  set --export color5 {color5.strip}
+  set --export color6 {color6.strip}
+  set --export color7 {color7.strip}
+  set --export color8 {color8.strip}
+  set --export color9 {color9.strip}
+  set --export color10 {color10.strip}
+  set --export color11 {color11.strip}
+  set --export color12 {color12.strip}
+  set --export color13 {color13.strip}
+  set --export color14 {color14.strip}
+  set --export color15 {color15.strip}
+#+END_SRC
+
+
+*** Handy script to pick a wallpaper randomly and call =wal -i= to generate the corresponding colors
+
+Here is my =~/.config/waybar/scripts/random_wallpaper_update_colors.sh=:
+
+#+BEGIN_SRC bash
+  #!/usr/bin/fish
+
+  set wallpaper_folder $argv[1]
+
+  #
+  # `if` help:  https://fishshell.com/docs/current/language.html#the-if-statement
+  # `test` help: https://fishshell.com/docs/current/cmds/test.html
+  #
+  if test -z $wallpaper_folder
+     echo "Usage: change_wallpaper.sh [wallpaper_folder]"
+     exit 0
+  end
+
+  set random_file (ls $wallpaper_folder |sort -R |tail -n1)
+  set fullpath_wallpaper "$wallpaper_folder$random_file"
+  echo "wallpaper_folder: $wallpaper_folder"
+  echo "random_file: $random_file"
+  echo "fullpath_wallpaper: $fullpath_wallpaper"
+
+  swww img --transition-type none $fullpath_wallpaper && wal -i $fullpath_wallpaper
+  pkill waybar
+  # sleep 1
+  dbus-run-session waybar > ~/.waybar.log
+#+END_SRC
+
+It accepts a fullpath image filename to set as wallpaper and call =wal= to generate corresponding colors and reload =waybar=.
+
+
 ** Cava: Console-based Audio Visualizer for Alsa
 
 #+BEGIN_SRC bash
@@ -269,6 +364,51 @@ If you want waybar support, then you have to remove the installed =waybar=, as t
 
 
 After that, enable the "cava" module in your =~/.config/waybar/config=.
+
+
+** Vim-liked keybindings document (PDF) viewer: 
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh zathura zathura-pdf-poppler
+
+  #
+  # Create a symbol link
+  #
+  doas ln -s /usr/bin/zathura /usr/bin/pdfviewer
+#+END_SRC
+
+Then, run =pdfviewer YOUR_PDF_FILE=
+
+
+Keybindings
+
+| Keybindings     | Description                      |
+|-----------------+----------------------------------|
+| [Open and quit] |                                  |
+| =q=               | Quit                             |
+| =:open=           | Open                             |
+| [Navigation]    |                                  |
+| =J/space=         | Next page                        |
+| =K=               | Prev page                        |
+| =j=               | Move down                        |
+| =k=               | Move up                          |
+| =C-d=             | Page down                        |
+| =C-u=             | Page up                          |
+| =gg=              | Go to first page                 |
+| =G=               | Go to last page                  |
+| =Xgg=             | Go to page X, =10gg= go to page 10 |
+| [Fit window]    |                                  |
+| =a=               | Fit with window height           |
+| =s=               | Fit with window width            |
+| =d=               | Toggle double-page mode          |
+| [Zoom]          |                                  |
+| =-=               | Zoom-out                         |
+| =+=               | Zoom-in                          |
+| =               | Overview all pages               |
+| [Rotation]      |                                  |
+| =r=               | Rotate the page                  |
+| [Search]        |                                  |
+| /               | Search                           |
 
 
 ** Run =Hyprland=
