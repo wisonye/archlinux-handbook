@@ -798,3 +798,53 @@ Open =brave= and open URL =brave://flags=, then search for =ozone=, choose =wayl
     adobe-source-han-sans-cn-fonts \
     adobe-source-han-serif-cn-fonts
 #+END_SRC
+
+
+** AI Text-to-speech
+
+*** Binary
+
+Download binary from [[https://github.com/rhasspy/piper/releases][here]]
+
+Then extract by running ~tar xf piper_amd64.tar.gz~
+
+
+*** Voices model files
+
+You can listen the voice sample from [[https://rhasspy.github.io/piper-samples/][here]].
+
+After that, download your prefer voice from [[https://github.com/rhasspy/piper/blob/master/VOICES.md][here]]
+
+Keep that in mind, each voice model has 2 files, the =model= link should save as =.onnx= and the =config= link should save as =.onnx.json=.
+
+And you have to make sure that those filenames are the SAME except the extension name, otherwise, it won't work!!!
+
+Move the downloaded voices file into the =piper/modles= folder (not necessary, just a good practice).
+
+#+BEGIN_SRC bash
+  ls -lht ./piper/models/
+
+  # total 61M
+  # -rw-r--r-- 1 wison wison 4.8K Jun 12 18:59 en_GB-jenny_dioco-medium.onnx.json
+  # -rw-r--r-- 1 wison wison  61M Jun 12 18:56 en_GB-jenny_dioco-medium.onnx
+#+END_SRC
+
+
+*** Create =playsound.sh= with the following content and save it into =piper= folder
+
+
+#+BEGIN_SRC bash
+  #!/bin/sh
+
+  if [ "$#" -ne 1 ]; then
+      echo "Mising input text."
+      exit 1
+  fi
+
+  echo $1 | \
+      piper --model {YOUR_PIPER_FOLDER_HERE}/models/en_GB-jenny_dioco-medium.onnx \
+      --output_file ~/temp/temp.wav && \
+      mpv ~/temp/temp.wav && \
+      rm -rf ~/temp/temp.wav
+#+END_SRC
+
