@@ -263,7 +263,7 @@ Pay attention to the =backend= setting!!!
 ** Generate dynamic colors from a given wallpaper
 
 #+BEGIN_SRC bash
-  doas pacman --sync --refresh pywal-16-colors
+  doas paru --sync --refresh pywal-16-colors
 #+END_SRC
 
 Then you can run =wal -i {FULLPATH_WALLPAPER_HERE}= to generate ~/.cache/wal~ folder that contains a lot of supported color templates.
