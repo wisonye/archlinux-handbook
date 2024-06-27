@@ -1,0 +1,13 @@
+* Solve neovim treesitter issue
+
+When you see this error:
+
+#+BEGIN_SRC bash
+  nvim: symbol lookup error: nvim: undefined symbol: ts_query_cursor_set_match_limit
+#+END_SRC
+
+That means your =tree-sitter= version is too old, upgrade to latest:
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh tree-sitter
+#+END_SRC
