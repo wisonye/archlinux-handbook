@@ -16,3 +16,17 @@ Upgrade to latest version:
 #+BEGIN_SRC bash
   doas pacman --sync --refresh llvm-libs
 #+END_SRC
+
+
+** cmake error:
+
+#+BEGIN_SRC bash
+    cmake: src/unix/process.c:972: uv_spawn: Assertion `!(options->flags & ~(UV_PROCESS_DETACHED | UV_PROCESS_SETGID | UV_PROCESS_SETUID | UV_PROCESS_WINDOWS_HIDE | UV_PROCESS_WINDOWS_HIDE_CONSOLE | UV_PROCESS_WINDOWS_HIDE_GUI | UV_PROCESS_WINDOWS_VERBATIM_ARGUMENTS))' failed.
+  ./configure.sh: line 21:  7312 Aborted                 (core dumped) cmake -S ./cmake -B ./temp_build/build_memory_leak_checking -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}
+#+END_SRC
+
+Upgrade to latest version:
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh libluv libuv cmake
+#+END_SRC
