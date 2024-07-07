@@ -50,7 +50,7 @@ Make sure to change the file permission:
   #
   # Hyprland
   #
-  doas pacman --sync --refresh hyprland xdg-desktop-portal-hyprland dunst qt6-wayland wl-clipboard alacritty tmux waybar mpv yt-dlp grim slurp nsxiv pavucontrol
+  doas pacman --sync --refresh hyprland xdg-desktop-portal-hyprland dunst qt6-wayland wl-clipboard alacritty tmux waybar mpv yt-dlp grim slurp nsxiv pavucontrol pamixer brightnessctl
 #+END_SRC
 
 
@@ -63,7 +63,7 @@ Make sure to change the file permission:
 Relogin to take effect.
 
 
-** Create and copy GIT SSH key
+** Create and copy =git= SSH key
 
 #+BEGIN_SRC bash
   ssh-keygen -t ed25519 -C "YOUR_EMAIL_HERE"
@@ -84,7 +84,7 @@ Relogin to take effect.
 #+END_SRC
 
 
-** Setup git
+** Setup =git=
 
 #+BEGIN_SRC bash
   git config --global user.name "YOUR_PREFFERED_USER_NAME_HERE"
