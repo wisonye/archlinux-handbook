@@ -92,6 +92,8 @@ Copy the example wireless profile to =/etc/netctl/=:
   doas cp -rvf /etc/netctl/examples/wireless-wpa ./NIC_NAME_HERE-dhcp
 #+END_SRC
 
+That =NIC_NAME_HERE-dhcp= (filename) is known as =netctl profile name=!!!
+
 
 After that, edit =NIC_NAME_HERE-dhcp= to change the nic name, WIFI =SSID= and =KEY= (encrypted password in HEX string)
 
@@ -133,6 +135,23 @@ My =cat /etc/netctl/wlp3s0= output as an example:
 
   # Set a priority for automatic profile selection
   #Priority=10
+#+END_SRC
+
+
+Finally, make sure enable the profile to auto start:
+
+#+BEGIN_SRC bash
+  netctl enable PROFILE_NAME_HERE
+
+  #
+  # Restart profile when needed
+  #
+  netctl restart PROFILE_NAME_HERE
+
+  #
+  # Check porfile status
+  #
+  netctl status PROFILE_NAME_HERE
 #+END_SRC
 
 

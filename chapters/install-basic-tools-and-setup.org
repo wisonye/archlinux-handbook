@@ -45,7 +45,7 @@ Make sure to change the file permission:
 ** Install everything I need
 
 #+BEGIN_SRC bash
-  doas pacman --sync --refresh tree git git-delta bat ripgrep procs htop btop fastfetch fzf fish lf neovim python-pynvim tmux emacs-nativecomp aspell aspell-en base-devel man-db man-pages
+  doas pacman --sync --refresh tree git git-delta bat ripgrep procs htop btop fastfetch fzf fish lf neovim python-pynvim tmux emacs-nativecomp aspell aspell-en base-devel man-db man-pages netctl ifplugd wpa_supplicant dhcpcd
 
   #
   # Hyprland
