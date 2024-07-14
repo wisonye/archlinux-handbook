@@ -848,3 +848,95 @@ Move the downloaded voices file into the =piper/modles= folder (not necessary, j
       rm -rf ~/temp/temp.wav
 #+END_SRC
 
+
+
+
+
+** Firewall
+
+*** Install
+
+#+BEGIN_SRC bash
+  doas pacman --sync --refresh firewalld
+#+END_SRC
+
+
+Then enable and start the service:
+
+#+BEGIN_SRC bash
+  doas systemctl enable firewalld.service
+  doas systemctl restart firewalld.service
+#+END_SRC
+
+
+*** Make sure =public= zone is the current active zone
+
+#+BEGIN_SRC bash
+  doas firewall-cmd --get-default-zone
+  # public
+
+  doas firewall-cmd --get-active-zone
+  # public (default)
+  #   interfaces: enp0s5
+#+END_SRC
+
+If NOT, then use =root= permission to edit ~/etc/firewalld/firewalld.conf~ and make sure:
+
+#+BEGIN_SRC config
+  DefaultZone=public
+#+END_SRC
+
+Then reload it by running:
+
+#+BEGIN_SRC bash
+  doas firewall-cmd --reload
+#+END_SRC
+
+
+*** Make sure remove the =ssh= service from the open service list
+
+#+BEGIN_SRC bash
+  doas firewall-cmd --list-service
+  # dhcpv6-client mdns
+#+END_SRC
+
+If you see =ssh= is there, then run the following command to remove it and reload:
+
+#+BEGIN_SRC bash
+  doas firewall-cmd --remove-service ssh --permanent
+  doas firewall-cmd --reload
+#+END_SRC
+
+
+
+*** Add/remove custom ports
+
+You can add or remove custom application ports by running the following commands:
+
+#+BEGIN_SRC bash
+  #
+  # Add/remove single port example
+  #
+  doas firewall-cmd --add-port=8080/tcp
+  doas firewall-cmd --remove-port=8080/tcp
+
+  doas firewall-cmd --add-port=9801/udp
+  doas firewall-cmd --remove-port=9801/udp
+
+  #
+  # Add a rang of ports example
+  #
+  doas firewall-cmd --add-port=8000-8080/tcp
+  doas firewall-cmd --remove-port=8000-8080/tcp
+
+  doas firewall-cmd --add-port=9801-9809/udp
+  doas firewall-cmd --remove-port=9801-9809/udp
+
+  #
+  # List ports
+  #
+  doas firewall-cmd --list-ports
+#+END_SRC
+
+
+
