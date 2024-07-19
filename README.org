@@ -15,5 +15,7 @@ The old markdown version is here: git@github.com:wisonye/arch-linux.git
 *** [[file:chapters/how-to-show-hardware-info.org][Show hardware info]]
 *** [[file:chapters/how-to-clean-cache.org][Clean cache]]
 *** [[file:chapters/how-to-use-hyprctl.org][Use hyprctl]]
-*** [[file:chapters/how-to-solve-gcc-libs-version-error.org][solve llvm/gcc/glic version issue]]
-*** [[file:chapters/how-to-solve-neovim-treesitter-error.org][solve neovim treesitter issue]]
+*** [[file:chapters/how-to-solve-gcc-libs-version-error.org][Solve llvm/gcc/glic version issue]]
+*** [[file:chapters/how-to-solve-neovim-treesitter-error.org][Solve neovim treesitter issue]]
+*** [[file:chapters/how-to-solve-pacman-cant-run.org][Solve pacman can't run]]
+
