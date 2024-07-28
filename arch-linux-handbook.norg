@@ -98,7 +98,6 @@
     *** Upgrade everything
 
         @code bash
-        doas pacman --sync --refresh  
         doas pacman -Syu
         @end
 
@@ -114,7 +113,7 @@
 
         @code bash
         # Install package by name
-        doas pacman --sync --refresh   PACKAGE_NAME
+        doas pacman -Syu   PACKAGE_NAME
 
         # Remove package by name
         doas pacman -Rsun PACKAGE_NAME
@@ -221,7 +220,7 @@
         - *dhcpcd*: DHCP/ IPv4LL/ IPv6RA/ DHCPv6 client.
 
         @code bash
-        doas pacman --sync --refresh netctl ifplugd wpa_supplicant dhcpcd
+        doas pacman -Syu netctl ifplugd wpa_supplicant dhcpcd
         @end
 
 
@@ -363,7 +362,7 @@
     *** Install and configure *doas*
 
         @code bash
-        pacman --sync --refresh opendoas
+        pacman -Syu opendoas
 
         @end
 
@@ -392,12 +391,12 @@
     *** Install everything I need
 
         @code bash
-        doas pacman --sync --refresh tree git git-delta bat ripgrep procs htop btop fastfetch fzf fish lf neovim python-pynvim tmux emacs-nativecomp aspell aspell-en base-devel man-db man-pages netctl ifplugd wpa_supplicant dhcpcd
+        doas pacman -Syu tree git git-delta bat ripgrep procs htop btop fastfetch fzf fish lf neovim python-pynvim tmux emacs-nativecomp aspell aspell-en base-devel man-db man-pages netctl ifplugd wpa_supplicant dhcpcd
 
         #
         # Hyprland
         #
-        doas pacman --sync --refresh hyprland xdg-desktop-portal-hyprland dunst qt6-wayland wl-clipboard alacritty tmux waybar mpv yt-dlp grim slurp nsxiv pavucontrol pamixer brightnessctl
+        doas pacman -Syu hyprland xdg-desktop-portal-hyprland dunst qt6-wayland wl-clipboard alacritty tmux waybar mpv yt-dlp grim slurp nsxiv pavucontrol pamixer brightnessctl
         @end
 
 
@@ -471,7 +470,7 @@
         su
 
         # Install sudo if not yet
-        pacman --sync --refresh sudo
+        pacman -Syu sudo
 
         # Allow `wheel` group to use `sudo`
         doas visudo
@@ -726,7 +725,7 @@
     *** Vim-liked keybindings document (PDF) viewer: 
 
         @code bash
-        doas pacman --sync --refresh zathura zathura-pdf-poppler
+        doas pacman -Syu zathura zathura-pdf-poppler
 
         #
         # Create a symbol link
@@ -950,7 +949,7 @@
         **** Install
 
              @code bash
-             doas pacman --sync --refresh bluez bluez-utils
+             doas pacman -Syu bluez bluez-utils
              @end
 
 
@@ -1214,7 +1213,7 @@
         **** Install
 
              @code bash
-             doas pacman --sync --refresh firewalld
+             doas pacman -Syu firewalld
              @end
 
 
@@ -1307,7 +1306,7 @@
         For C/C++ development, you need to install the following packages:
 
         @code bash
-        doas pacman --sync --refresh base-devel clang llvm cmake
+        doas pacman -Syu base-devel clang llvm cmake
         @end
 
 
@@ -1858,12 +1857,12 @@
              #
              # If you use normal kernel
              #
-             # doas pacman --sync --refresh acpi_call
+             # doas pacman -Syu acpi_call
 
              #
              # If you use `lts` kernel
              #
-             doas pacman --sync --refresh acpi_call-lts
+             doas pacman -Syu acpi_call-lts
              @end
 
 
@@ -1924,7 +1923,7 @@
              #
              # Install
              #
-             doas pacman --sync --refresh iio-sensor-proxy
+             doas pacman -Syu iio-sensor-proxy
 
              #
              # Enable service
@@ -2307,7 +2306,7 @@
              Upgrade to latest version:
 
              @code bash
-             doas pacman --sync --refresh gcc gcc-libs libgccjit
+             doas pacman -Syu gcc gcc-libs libgccjit
              @end
 
 
@@ -2316,7 +2315,7 @@
              Upgrade to latest version:
 
              @code bash
-             doas pacman --sync --refresh llvm-libs
+             doas pacman -Syu llvm-libs
              @end
 
 
@@ -2330,7 +2329,7 @@
              Upgrade to latest version:
 
              @code bash
-             doas pacman --sync --refresh libluv libuv cmake
+             doas pacman -Syu libluv libuv cmake
              @end
 
     *** How to Solve *neovim* treesitter issue
@@ -2344,12 +2343,12 @@
         That means your *tree-sitter* version is too old, upgrade to latest:
 
         @code bash
-        doas pacman --sync --refresh tree-sitter
+        doas pacman -Syu tree-sitter
         @end
 
     *** How to solve *pacman* can't run
 
-        When you run *doas pacman --sync --refresh XXXX* to upgrade the installed program, it updates *icu* (or another important shared libraries) partially, sometimes it will cause *pacman* can't run anymore like this:
+        When you run *doas pacman -Syu XXXX* to upgrade the installed program, it updates *icu* (or another important shared libraries) partially, sometimes it will cause *pacman* can't run anymore like this:
 
         @code bash
         pacman error while loading shared libraries libicuuc.so.74: cannot open shared object file: No such file or directory
