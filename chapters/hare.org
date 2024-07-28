@@ -28,6 +28,7 @@ After installation, disable =wheel= group by doing =doas visudo= again!!!
   cd ~/temp
   git clone --depth=1 https://git.sr.ht/~sircmpwn/harec && cd harec
   cp -rvf configs/linux.mk config.mk
+  make
   doas make install
 
   #
