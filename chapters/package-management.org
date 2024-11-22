@@ -33,6 +33,16 @@ Open =/etc/pacman.conf= and enable =Color= and save.
 #+END_SRC
 
 
+** Init and populate the key ring
+
+Just to prevent the =Key-ring not Writable= happen:
+
+#+BEGIN_SRC bash
+  doas pacman-key --init
+  doas pacman-key --populate
+#+END_SRC
+
+
 ** Search packages to install
 
 #+BEGIN_SRC bash
