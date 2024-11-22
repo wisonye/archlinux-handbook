@@ -8,6 +8,7 @@ The old markdown version is here: git@github.com:wisonye/arch-linux.git
 ** [[file:chapters/install-basic-tools-and-setup.org][Install basic tools and setup]]
 ** Development
 *** [[file:chapters/c-cpp.org][C/C++]]
+*** [[file:chapters/valgrind.org][Valgrind]]
 *** [[file:chapters/hare.org][Hare]]
 ** Hardware tweaks
 *** [[file:chapters/thinkpad_x1_yoga_gen3.org][Thinkpad X1 Yoga Gen 3]]
