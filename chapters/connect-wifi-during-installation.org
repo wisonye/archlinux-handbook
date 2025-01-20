@@ -21,13 +21,19 @@ Show its status:
 
 #+BEGIN_SRC bash
   iwctl device wlan0 show
+
+  # Name         wlan0
+  # Mode         station
+  # Powered      on
+  # Address      XX:XX:XX:XX
+  # Adapter      phy0 (NIC physical hardware name)
 #+END_SRC
 
 If the device or its corresponding adapter is turned off, turn it on before the next step:
 
 #+BEGIN_SRC bash
   iwctl device wlan0 set-property Powered on
-  iwctl adapter wlan0 set-property Powered on
+  iwctl adapter phy0 set-property Powered on
 #+END_SRC
 
 
